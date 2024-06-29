@@ -16,27 +16,13 @@ export const useLoginHooks = () => {
 
   const onSubmitLogin = async () => {
     try {
-      const response = await instance.post("api/v1/token/create", {
+      const response = await instance.post("token/create", {
         user_id: loginInformation.id,
         password: loginInformation.password,
       });
 
       if (response) {
-        localStorage.setItem("token", response.data.token);
-
-        instance.interceptors.request.use(
-          (config) => {
-            // 로컬 스토리지 또는 다른 저장소에서 토큰 가져오기
-            const token = localStorage.getItem("token");
-            if (token) {
-              config.headers["Authorization"] = `Bearer ${response.data.token}`;
-            }
-            return config;
-          },
-          (error) => {
-            return Promise.reject(error);
-          }
-        );
+        localStorage.setItem("token", `Bearer ${response.data.token}`);
 
         navigate("/main");
       }

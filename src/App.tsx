@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
 import LoginPage from "./containers/Login";
+import MainPage from "./containers/Main";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/main" element={<MainPage />} />
         {localStorage.getItem("token") === undefined && (
           <Navigate replace to="/" />
         )}
