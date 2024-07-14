@@ -1,0 +1,124 @@
+import React from "react";
+import styled from "styled-components";
+import { HeaderItem } from "../../utils/types/HeaderTypes";
+
+const SubContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 145px;
+  left: 0;
+  width: 245px;
+  min-height: 100vh;
+  background: #f9f9fc;
+`;
+
+const SubItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  height: 86px;
+
+  border: 1px solid #d9d9d9;
+  background: #f9f9fc;
+
+  color: var(--Text-Gray_sub, #868686);
+  text-align: center;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21.333px; /* 106.667% */
+`;
+
+interface SubHeaderIProps {
+  headerItem: HeaderItem[];
+  visibleHeaderItem: string;
+}
+
+const SubHeader: React.FC<SubHeaderIProps> = (props) => {
+  const { headerItem, visibleHeaderItem } = props;
+
+  const renderHeaderContents = () => {
+    switch (visibleHeaderItem) {
+      case "게시판관리": {
+        return (
+          <>
+            <SubItem>최근 게시물_고객</SubItem>
+            <SubItem>최근 게시물_관리자</SubItem>
+            <SubItem>대표 메뉴 설정</SubItem>
+            <SubItem>서브 메뉴 설정</SubItem>
+          </>
+        );
+      }
+      case "메인": {
+        return (
+          <>
+            <SubItem>상단 배너</SubItem>
+            <SubItem>소개</SubItem>
+            <SubItem>라벨종류</SubItem>
+            <SubItem>소개2</SubItem>
+          </>
+        );
+      }
+      case "회사 소개": {
+        return (
+          <>
+            {headerItem[0].sub_menus?.map((item, idx) => {
+              return <SubItem key={idx}>{item.title}</SubItem>;
+            })}
+          </>
+        );
+      }
+      case "사업소개": {
+        return (
+          <>
+            {headerItem[1].sub_menus?.map((item, idx) => {
+              return <SubItem key={idx}>{item.title}</SubItem>;
+            })}
+          </>
+        );
+      }
+      case "일반라벨": {
+        return (
+          <>
+            {headerItem[2].sub_menus?.map((item, idx) => {
+              return <SubItem key={idx}>{item.title}</SubItem>;
+            })}
+          </>
+        );
+      }
+      case "디지털인쇄": {
+        return (
+          <>
+            {headerItem[3].sub_menus?.map((item, idx) => {
+              return <SubItem key={idx}>{item.title}</SubItem>;
+            })}
+          </>
+        );
+      }
+      case "견적문의": {
+        return (
+          <>
+            {headerItem[4].sub_menus?.map((item, idx) => {
+              return <SubItem key={idx}>{item.title}</SubItem>;
+            })}
+          </>
+        );
+      }
+      default:
+        return;
+    }
+  };
+
+  return (
+    <SubContainer>
+      <SubItem style={{ background: "#fff", border: "none" }} />
+      {renderHeaderContents()}
+    </SubContainer>
+  );
+};
+
+export default SubHeader;

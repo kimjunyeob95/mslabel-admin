@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 
 const TableContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0 20px;
   overflow: auto;
   width: ${window.innerWidth}px;
@@ -32,6 +34,7 @@ const Table = styled.table`
       border-top: 1px solid var(--Image-Gray, #d9d9d9);
       border-bottom: 1px solid var(--Image-Gray, #d9d9d9);
       border-left: 1px solid var(--Image-Gray, #d9d9d9);
+      border-right: 1px solid var(--Image-Gray, #d9d9d9);
       background: var(--Background-Gray, #f9f9fc);
     }
   }
@@ -42,6 +45,7 @@ const Table = styled.table`
       background: #fff;
       border-bottom: 1px solid var(--Line-Gray, #d9d9d9);
       border-left: 1px solid var(--Line-Gray, #d9d9d9);
+      border-right: 1px solid var(--Image-Gray, #d9d9d9);
       font-weight: 500;
     }
   }
