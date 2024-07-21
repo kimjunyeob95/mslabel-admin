@@ -6,9 +6,8 @@ const TableContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
   overflow: auto;
-  width: ${window.innerWidth}px;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;
@@ -41,7 +40,7 @@ const Table = styled.table`
 
   .item {
     td {
-      padding: 19px 25px;
+      padding: 10px;
       background: #fff;
       border-bottom: 1px solid var(--Line-Gray, #d9d9d9);
       border-left: 1px solid var(--Line-Gray, #d9d9d9);
@@ -51,31 +50,19 @@ const Table = styled.table`
   }
 `;
 
-interface TableIProps {}
+interface TableIProps {
+  thElement: React.ReactNode;
+  tdElement: React.ReactNode;
+}
 
 const CommonTable: React.FC<TableIProps> = (props) => {
+  const { thElement, tdElement } = props;
   return (
     <TableContainer>
       <Table>
         <tbody>
-          <tr className="title">
-            <th>게시판</th>
-            <th>카테고리</th>
-            <th>이름</th>
-            <th>휴대폰번호</th>
-            <th>일시</th>
-            <th>답변여부</th>
-            <th>답변</th>
-          </tr>
-          <tr className="item">
-            <td>견적문의</td>
-            <td>라벨 인쇄</td>
-            <td>박소진</td>
-            <td>01025721701</td>
-            <td>24.01.24.10:00</td>
-            <td>준비중</td>
-            <td>답변1</td>
-          </tr>
+          <tr className="title">{thElement}</tr>
+          {tdElement}
         </tbody>
       </Table>
     </TableContainer>

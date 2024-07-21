@@ -64,8 +64,6 @@ const Header = () => {
     return <></>;
   }
 
-  console.log(headerItem, "<<");
-
   return (
     <Container>
       {headerItem && (

@@ -11,17 +11,19 @@ interface RowIProps {
   gap?: string;
   align?: string;
   justifyContent?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }
 
 const Row: React.FC<RowIProps> = (props) => {
-  const { gap, align, justifyContent, children } = props;
+  const { gap, align, justifyContent, style, children } = props;
   return (
     <Container
       style={{
         gap: gap && gap,
         alignItems: align && align,
         justifyContent: justifyContent && justifyContent,
+        ...style,
       }}
     >
       {children}

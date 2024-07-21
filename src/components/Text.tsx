@@ -15,11 +15,12 @@ interface TextIProps {
   color?: string;
   size?: string;
   weight?: number;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }
 
 const Text: React.FC<TextIProps> = (props) => {
-  const { color, size, weight, children } = props;
+  const { color, size, weight, style, children } = props;
 
   return (
     <TextItem
@@ -27,6 +28,7 @@ const Text: React.FC<TextIProps> = (props) => {
         color: color && color,
         fontSize: size && size,
         fontWeight: weight && weight,
+        ...style,
       }}
     >
       {children}

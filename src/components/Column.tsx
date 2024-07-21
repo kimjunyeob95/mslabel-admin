@@ -12,11 +12,12 @@ interface ColumnIProps {
   gap?: string;
   align?: string;
   justifyContent?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }
 
 const Column: React.FC<ColumnIProps> = (props) => {
-  const { gap, align, justifyContent, children } = props;
+  const { gap, align, justifyContent, style, children } = props;
 
   return (
     <Container
@@ -24,6 +25,7 @@ const Column: React.FC<ColumnIProps> = (props) => {
         gap: gap && gap,
         alignItems: align && align,
         justifyContent: justifyContent && justifyContent,
+        ...style,
       }}
     >
       {children}

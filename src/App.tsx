@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import "./App.css";
 import LoginPage from "./containers/Login";
 import MainPage from "./containers/Main";
 import PrivateRoute from "./containers/PrivateRoute";
@@ -26,7 +25,7 @@ function App() {
           <Route path="/" element={<Navigate replace to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/main/:contents" element={<MainPage />} />
             <Route path="/board" element={<BoardPage />} />
           </Route>
         </Routes>

@@ -18,7 +18,11 @@ export const useHeaderHooks = () => {
       if (response) {
         setHeaderItem(response.data.data);
       }
-    } catch (error) {}
+    } catch (error: any) {
+      if (error.response.status === 500) {
+        localStorage.removeItem("token");
+      }
+    }
   };
 
   useEffect(() => {
