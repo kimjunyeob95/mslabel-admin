@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import Row from "../../../../components/Row";
 import CommonTable from "../../../../components/Table";
 import Text from "../../../../components/Text";
-import { TopBanner } from "../../hooks/types";
+import { BannerFilter, RecordsEntity, TopBanner } from "../../hooks/types";
 
 const Container = styled.div`
   display: flex;
@@ -87,13 +87,21 @@ const SearchBox = styled.input`
 
 interface TopBannerListIProps {
   topBannerList: TopBanner;
+  bannerFilter: BannerFilter;
+  handleBannerItemFilter: (key: string, value: string) => void;
+  handleNavigateToEditPage: (item: RecordsEntity) => void;
+  handleFilterTopBannerItems: () => void;
 }
 
 const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
-  const { topBannerList } = props;
+  const {
+    topBannerList,
+    bannerFilter,
+    handleBannerItemFilter,
+    handleNavigateToEditPage,
+    handleFilterTopBannerItems,
+  } = props;
   const navigate = useNavigate();
-
-  console.log(topBannerList, "><<<FDASfsf");
 
   return (
     <Container>
@@ -101,7 +109,11 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
         <Row gap="24px">
           <FilterTitle>노출 여부</FilterTitle>
           <Row gap="8px" align="center">
-            <Radio type="radio" />
+            <Radio
+              type="radio"
+              checked={bannerFilter.is_show === ""}
+              onChange={() => handleBannerItemFilter("is_show", "")}
+            />
             <Text
               color="#000"
               size="16px"
@@ -112,7 +124,11 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
             </Text>
           </Row>
           <Row gap="8px" align="center">
-            <Radio type="radio" />
+            <Radio
+              type="radio"
+              checked={bannerFilter.is_show === "Y"}
+              onChange={() => handleBannerItemFilter("is_show", "Y")}
+            />
             <Text
               color="#000"
               size="16px"
@@ -123,7 +139,11 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
             </Text>
           </Row>
           <Row gap="8px" align="center">
-            <Radio type="radio" />
+            <Radio
+              type="radio"
+              checked={bannerFilter.is_show === "N"}
+              onChange={() => handleBannerItemFilter("is_show", "N")}
+            />
             <Text
               color="#000"
               size="16px"
@@ -138,7 +158,13 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
           <FilterTitle>검색어</FilterTitle>
           <Row gap="8px" align="center">
             <SearchTitle>제목</SearchTitle>
-            <SearchBox placeholder="검색어를 입력하세요" />
+            <SearchBox
+              placeholder="검색어를 입력하세요"
+              value={bannerFilter.keyword}
+              onChange={(e: any) => {
+                handleBannerItemFilter("keyword", e.target.value);
+              }}
+            />
             <SearchTitle
               style={{
                 justifyContent: "center",
@@ -146,6 +172,7 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
                 border: "none",
                 color: "#fff",
               }}
+              onClick={handleFilterTopBannerItems}
             >
               검색
             </SearchTitle>
@@ -154,7 +181,9 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
       </FilterContainer>
       <Row justifyContent="space-between">
         <Text size="20px" weight={400}>
-          검색 30건 / 전체 <span style={{ fontWeight: 700 }}>100</span>건
+          검색 {topBannerList.records.length}건 / 전체{" "}
+          <span style={{ fontWeight: 700 }}>{topBannerList.total_records}</span>
+          건
         </Text>
         <SearchTitle
           style={{
@@ -186,14 +215,20 @@ const TopBannerList: React.FC<TopBannerListIProps> = (props) => {
           <React.Fragment>
             {topBannerList.records.map((item, idx) => {
               return (
-                <tr className="item" key={idx}>
+                <tr
+                  className="item"
+                  key={idx}
+                  onClick={() => handleNavigateToEditPage(item)}
+                >
                   <td style={{ maxWidth: "65px" }}>{item.id}</td>
                   <td
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    style={
+                      {
+                        // display: "flex",
+                        // alignItems: "center",
+                        // justifyContent: "center",
+                      }
+                    }
                   >
                     <img
                       src={item.img_url}

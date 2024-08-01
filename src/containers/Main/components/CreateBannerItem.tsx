@@ -1,14 +1,28 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import dayjs from "dayjs";
 
 import Row from "../../../components/Row";
 import { TopBannerItems } from "../hooks/useMainPageTopBannerHooks";
+import Column from "../../../components/Column";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid var(--Image-Gray, #d9d9d9);
+  border-bottom: 1px solid var(--Image-Gray, #d9d9d9);
+  border-left: 1px solid var(--Image-Gray, #d9d9d9);
+  background-color: #f9f9fc;
 `;
 
 const TitleForm = styled.div`
@@ -18,12 +32,6 @@ const TitleForm = styled.div`
   gap: 10px;
   padding: 19px 25px;
   width: 235px;
-  height: 56px;
-
-  border-top: 1px solid var(--Image-Gray, #d9d9d9);
-  border-bottom: 1px solid var(--Image-Gray, #d9d9d9);
-  border-left: 1px solid var(--Image-Gray, #d9d9d9);
-  background: var(--Background-Gray, #f9f9fc);
 
   color: var(--Text-Main, #414141);
 
@@ -38,11 +46,14 @@ const TitleForm = styled.div`
 const ContentsForm = styled.div`
   display: flex;
   width: 1000px;
-  height: 56px;
   padding: 19px 25px;
   align-items: center;
   gap: 10px;
-  border: 1px solid var(--Image-Gray, #d9d9d9);
+  height: inherit;
+  min-height: 65px;
+  border-left: 1px solid var(--Image-Gray, #d9d9d9);
+  border-right: 1px solid var(--Image-Gray, #d9d9d9);
+  background-color: #fff;
 
   .input-file-button {
     display: flex;
@@ -52,6 +63,7 @@ const ContentsForm = styled.div`
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
+
     border: 1px solid var(--Line-Gray_2, #acacac);
     background: var(--Image-Gray, #d9d9d9);
     color: var(--Text-Gray_sub, #868686);
@@ -114,29 +126,17 @@ interface CreateBannerItemIProps {
 
 const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
   const { topBannerItems, handleOnChangeTopBannerItems } = props;
-
-  const [checked, setChecked] = useState<boolean>(false);
-  const [isShowChecked, setIsShowChecked] = useState<boolean>(false);
-  const [imageFile, setImageFile] = useState<any>();
+  const location = useLocation();
 
   const hanldeImageUpload = (event: any) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const blob = new Blob([reader.result as ArrayBuffer], {
-        type: file.type,
-      });
-      const formData = new FormData();
-      formData.append("file", blob, file.name);
 
-      handleOnChangeTopBannerItems("thumbnail", formData);
-    };
-    reader.readAsArrayBuffer(file);
+    handleOnChangeTopBannerItems("thumbnail", file);
   };
 
   return (
     <Container>
-      <Row>
+      <ItemContainer>
         <TitleForm>제목</TitleForm>
         <ContentsForm>
           <InputForm
@@ -148,8 +148,8 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
           />
           {topBannerItems.title.length}/25
         </ContentsForm>
-      </Row>
-      <Row>
+      </ItemContainer>
+      <ItemContainer>
         <TitleForm>노출기간</TitleForm>
         <ContentsForm>
           <Row gap="24px">
@@ -157,6 +157,7 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
               <CheckBox
                 type="checkbox"
                 defaultChecked={topBannerItems.is_always_show === "Y"}
+                checked={topBannerItems.is_always_show === "Y"}
                 onChange={() => {
                   handleOnChangeTopBannerItems(
                     "is_always_show",
@@ -171,6 +172,7 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
               <Calendar
                 type="date"
                 min={dayjs().format("YYYY-MM-DDTHH:mm")}
+                value={topBannerItems.show_started_at}
                 onChange={(e: any) => {
                   handleOnChangeTopBannerItems(
                     "show_started_at",
@@ -182,6 +184,7 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
               <Calendar
                 type="date"
                 min={dayjs().format("YYYY-MM-DDTHH:mm")}
+                value={topBannerItems.show_ended_at}
                 onChange={(e: any) => {
                   handleOnChangeTopBannerItems("show_ended_at", e.target.value);
                 }}
@@ -189,8 +192,8 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
             </Row>
           </Row>
         </ContentsForm>
-      </Row>
-      <Row>
+      </ItemContainer>
+      <ItemContainer>
         <TitleForm>노출여부</TitleForm>
         <ContentsForm>
           <Row gap="24px">
@@ -198,6 +201,7 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
               <Radio
                 type="radio"
                 defaultChecked={topBannerItems.is_show === "Y"}
+                checked={topBannerItems.is_show === "Y"}
                 onChange={() => {
                   handleOnChangeTopBannerItems("is_show", "Y");
                 }}
@@ -208,6 +212,7 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
               <Radio
                 type="radio"
                 defaultChecked={topBannerItems.is_show === "N"}
+                checked={topBannerItems.is_show === "N"}
                 onChange={() => {
                   handleOnChangeTopBannerItems("is_show", "N");
                 }}
@@ -216,24 +221,34 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
             </Row>
           </Row>
         </ContentsForm>
-      </Row>
-      <Row>
+      </ItemContainer>
+      <ItemContainer>
         <TitleForm>썸네일</TitleForm>
         <ContentsForm>
-          <Row gap="24px">
-            <label className="input-file-button" htmlFor="input-file">
-              파일선택
-            </label>
-            <input
-              type="file"
-              id="input-file"
-              style={{ display: "none" }}
-              onChange={hanldeImageUpload}
-            />
-            (사이즈 : 1920x560px(px), 용량 2MB이하, 형식: jpg, png)
-          </Row>
+          <Column gap="13px" align="flex-start">
+            <Row gap="24px">
+              <label className="input-file-button" htmlFor="input-file">
+                파일선택
+              </label>
+              <input
+                type="file"
+                id="input-file"
+                style={{ display: "none" }}
+                onChange={hanldeImageUpload}
+              />
+              (사이즈 : 1920x560px(px), 용량 2MB이하, 형식: jpg, png)
+            </Row>
+            {topBannerItems.thumbnail &&
+              !(topBannerItems.thumbnail instanceof File) && (
+                <img
+                  src={topBannerItems.thumbnail}
+                  alt="image thumbnail"
+                  style={{ width: "650px" }}
+                />
+              )}
+          </Column>
         </ContentsForm>
-      </Row>
+      </ItemContainer>
     </Container>
   );
 };

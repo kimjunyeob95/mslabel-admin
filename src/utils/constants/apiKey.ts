@@ -1,5 +1,1 @@
-// import { getEnvConstant } from "./env";
-
-// export const API_BASE_URL = getEnvConstant("baseURL");
-
-export {};
+export const ADMIN_TOP_BANNER = "/admin/main/topBanners";

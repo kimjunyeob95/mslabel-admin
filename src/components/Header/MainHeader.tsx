@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MAIN_LOGO } from "../../assets/image";
 import { HeaderItem } from "../../utils/types/HeaderTypes";
@@ -41,8 +41,18 @@ interface MainHeaderIProps {
 const MainHeader: React.FC<MainHeaderIProps> = (props) => {
   const { headerItem, handelOnClickHeaderItem } = props;
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [selecteItem, setSelectedItem] = useState<string>("게시판관리");
+
+  useEffect(() => {
+    if (location.pathname.includes("main")) {
+      handelOnClickHeaderItem("메인");
+      setSelectedItem("메인");
+
+      return;
+    }
+  }, [location]);
 
   return (
     <Container>

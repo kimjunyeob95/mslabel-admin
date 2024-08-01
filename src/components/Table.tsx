@@ -24,7 +24,6 @@ const Table = styled.table`
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
-  line-height: 24px;
   color: #414141;
 
   .title {
@@ -39,6 +38,8 @@ const Table = styled.table`
   }
 
   .item {
+    cursor: pointer;
+
     td {
       padding: 10px;
       background: #fff;
