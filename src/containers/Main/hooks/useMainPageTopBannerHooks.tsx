@@ -40,14 +40,14 @@ export const useMainPageTopBannerHooks = () => {
     setTopBannerItems({ ...topBannerItems, [id]: value });
   };
 
-  const handleBannerItemFilter = (key: string, value: string) => {
+  const handleBannerItemFilter = (key: string, value: any) => {
     setBannerFilter({ ...bannerFilter, [key]: value });
   };
 
   const handleGetTopBannerItems = async () => {
     try {
       const response = await instance.get(
-        `${ADMIN_TOP_BANNER}?page=${bannerFilter.page}&page_size=${bannerFilter.page_size}`
+        `${ADMIN_TOP_BANNER}?page=${bannerFilter.page}&page_size=${bannerFilter.page_size}&search_cls=title`
       );
 
       if (response) {
@@ -183,6 +183,10 @@ export const useMainPageTopBannerHooks = () => {
       return;
     }
   }, [topBannerList, content]);
+
+  useEffect(() => {
+    handleFilterTopBannerItems();
+  }, [bannerFilter.page]);
 
   return {
     topBannerItems,

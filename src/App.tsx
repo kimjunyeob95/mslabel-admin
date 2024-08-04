@@ -12,6 +12,7 @@ const AppLayOut = styled.div`
   align-items: center;
   position: relative;
   margin: 0 auto;
+  min-width: 1920px;
   max-width: 1920px;
   width: 100%;
 `;

@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Column from "../../components/Column";
-import Row from "../../components/Row";
-import CommonTable from "../../components/Table";
-import CreateBannerItem from "./components/CreateBannerItem";
+import Introduce from "./components/Introduce/Introduce";
+
 import TopBanner from "./components/TopBanner/TopBanner";
 
 const Container = styled.div`
@@ -18,15 +16,6 @@ const Container = styled.div`
   max-width: 1470px;
 `;
 
-const Title = styled.div`
-  color: #000;
-  font-family: "Spoqa Han Sans Neo";
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 42px; /* 131.25% */
-`;
-
 const MainPage = () => {
   const params = useParams<{ contents: string }>();
 
@@ -34,6 +23,8 @@ const MainPage = () => {
     switch (params.contents) {
       case "banner":
         return <TopBanner />;
+      case "introduce":
+        return <Introduce />;
       default:
         return <></>;
     }

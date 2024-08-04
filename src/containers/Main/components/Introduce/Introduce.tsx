@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import queryString from "query-string-for-all";
 import styled from "styled-components";
+import { parse } from "query-string-for-all";
 
-import { useMainPageTopBannerHooks } from "../../hooks/useMainPageTopBannerHooks";
-import Row from "../../../../components/Row";
 import Column from "../../../../components/Column";
-import CreateBannerItem from "../CreateBannerItem";
-import TopBannerList from "./TopBannerList";
+import Row from "../../../../components/Row";
 import {
   ICON_NEXT,
   ICON_NEXT_ALL,
   ICON_PREV,
   ICON_PREV_ALL,
 } from "../../../../assets/image";
+import IntroduceList from "./IntroduceList";
+import { useMainPageIntroduceHooks } from "../../hooks/useMainPageIntroduceHooks";
+import CreateIntroduceItem from "./CreateIntroduceItem";
 import SaveButton from "../Common/SaveButton";
 
 const Title = styled.div`
@@ -49,26 +49,26 @@ const ArrowImage = styled.img`
   cursor: pointer;
 `;
 
-const TopBanner = () => {
-  const {
-    topBannerList,
-    topBannerItems,
-    bannerFilter,
-    handleOnChangeTopBannerItems,
-    handleBannerItemFilter,
-    handleFilterTopBannerItems,
-    handleCreateTopBannerItem,
-    handleModifyTopBannerItem,
-    handleDeleteTopBannerItem,
-    handleNavigateToEditPage,
-  } = useMainPageTopBannerHooks();
-
+const Introduce = () => {
   const location = useLocation();
-  const { content, id } = queryString.parse(location.search);
+  const { content, id } = parse(location.search);
+
+  const {
+    introduceList,
+    introduceFilter,
+    introduceParams,
+    handleOnChangeIntroduceParams,
+    handleFilterIntroduceItems,
+    handleCreateIntroduceItem,
+    handleModifyIntroduceItem,
+    handleDeleteIntroduceItem,
+    handleNavigateToEditPage,
+    handleIntroduceFilter,
+  } = useMainPageIntroduceHooks();
 
   const [paginationIndex, setPaginationIndex] = useState<number>(1);
-  const pageNationLength = topBannerList
-    ? Math.ceil(topBannerList!.total_records / 10)
+  const pageNationLength = introduceList
+    ? Math.ceil(introduceList!.total_records / 10)
     : 0;
 
   const handlePaginationNavigate = (type: string) => {
@@ -76,7 +76,7 @@ const TopBanner = () => {
       case "next": {
         if (paginationIndex !== pageNationLength) {
           setPaginationIndex(paginationIndex + 1);
-          handleBannerItemFilter("page", paginationIndex + 1);
+          handleIntroduceFilter("page", paginationIndex + 1);
         }
 
         return;
@@ -84,14 +84,14 @@ const TopBanner = () => {
       case "next-all": {
         if (paginationIndex !== pageNationLength) {
           setPaginationIndex(pageNationLength);
-          handleBannerItemFilter("page", pageNationLength);
+          handleIntroduceFilter("page", pageNationLength);
         }
         return;
       }
       case "prev": {
         if (paginationIndex !== 1) {
           setPaginationIndex(paginationIndex - 1);
-          handleBannerItemFilter("page", paginationIndex - 1);
+          handleIntroduceFilter("page", paginationIndex - 1);
         }
 
         return;
@@ -99,7 +99,7 @@ const TopBanner = () => {
       case "prev-all": {
         if (paginationIndex !== 1) {
           setPaginationIndex(1);
-          handleBannerItemFilter("page", 1);
+          handleIntroduceFilter("page", 1);
         }
         return;
       }
@@ -118,7 +118,7 @@ const TopBanner = () => {
           $isChecked={i === paginationIndex}
           onClick={() => {
             setPaginationIndex(i);
-            handleBannerItemFilter("page", i);
+            handleIntroduceFilter("page", i);
           }}
         >
           {i}
@@ -134,14 +134,14 @@ const TopBanner = () => {
       case "view": {
         return (
           <React.Fragment>
-            {topBannerList && (
+            {introduceList && (
               <Column gap="40px">
-                <TopBannerList
-                  topBannerList={topBannerList}
-                  bannerFilter={bannerFilter}
-                  handleBannerItemFilter={handleBannerItemFilter}
+                <IntroduceList
+                  introduceList={introduceList}
+                  introduceFilter={introduceFilter}
+                  handleIntroduceFilter={handleIntroduceFilter}
+                  handleFilterIntroduceItems={handleFilterIntroduceItems}
                   handleNavigateToEditPage={handleNavigateToEditPage}
-                  handleFilterTopBannerItems={handleFilterTopBannerItems}
                 />
                 <Row gap="16px">
                   <Row gap="8px">
@@ -178,12 +178,17 @@ const TopBanner = () => {
       case "create": {
         return (
           <React.Fragment>
-            <CreateBannerItem
-              topBannerItems={topBannerItems}
-              handleOnChangeTopBannerItems={handleOnChangeTopBannerItems}
+            <CreateIntroduceItem
+              introduceParams={introduceParams}
+              handleOnChangeIntroduceParams={handleOnChangeIntroduceParams}
             />
             <Row justifyContent="flex-end" style={{ width: "1235px" }}>
-              <SaveButton onClick={handleCreateTopBannerItem} text="저장" />
+              <SaveButton
+                onClick={() => {
+                  handleCreateIntroduceItem();
+                }}
+                text="저장"
+              />
             </Row>
           </React.Fragment>
         );
@@ -191,9 +196,9 @@ const TopBanner = () => {
       case "edit": {
         return (
           <React.Fragment>
-            <CreateBannerItem
-              topBannerItems={topBannerItems}
-              handleOnChangeTopBannerItems={handleOnChangeTopBannerItems}
+            <CreateIntroduceItem
+              introduceParams={introduceParams}
+              handleOnChangeIntroduceParams={handleOnChangeIntroduceParams}
             />
             <Row
               gap="14px"
@@ -202,7 +207,7 @@ const TopBanner = () => {
             >
               <SaveButton
                 onClick={() => {
-                  handleDeleteTopBannerItem(Number(id));
+                  handleDeleteIntroduceItem(Number(id));
                 }}
                 text="삭제"
                 style={{ backgroundColor: "#868686" }}
@@ -210,7 +215,7 @@ const TopBanner = () => {
 
               <SaveButton
                 onClick={() => {
-                  handleModifyTopBannerItem(Number(id));
+                  handleModifyIntroduceItem(Number(id));
                 }}
                 text="저장"
               />
@@ -226,11 +231,11 @@ const TopBanner = () => {
   return (
     <React.Fragment>
       <Row style={{ width: "100%", justifyContent: "flex-start" }}>
-        <Title>상단배너</Title>
+        <Title>소개_명성은 이런 일을 합니다</Title>
       </Row>
       <Column gap="40px">{renderTopBannerContents()}</Column>
     </React.Fragment>
   );
 };
 
-export default TopBanner;
+export default Introduce;

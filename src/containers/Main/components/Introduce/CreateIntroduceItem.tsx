@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
-
-import Row from "../../../components/Row";
-import { TopBannerItems } from "../hooks/useMainPageTopBannerHooks";
-import Column from "../../../components/Column";
+import Column from "../../../../components/Column";
+import Row from "../../../../components/Row";
+import { IntroduceParams } from "../../hooks/useMainPageIntroduceHooks";
 
 const Container = styled.div`
   display: flex;
@@ -96,22 +93,6 @@ const InputForm = styled.input`
   }
 `;
 
-const CheckBox = styled.input`
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid #acacac;
-`;
-
-const Calendar = styled.input`
-  display: flex;
-  width: 129px;
-  height: 40px;
-  padding: 8px 12px;
-  align-items: center;
-  gap: 10px;
-`;
-
 const Radio = styled.input`
   width: 16px;
   height: 16px;
@@ -119,18 +100,40 @@ const Radio = styled.input`
   stroke: var(--Line-Gray_2, #acacac);
 `;
 
-interface CreateBannerItemIProps {
-  topBannerItems: TopBannerItems;
-  handleOnChangeTopBannerItems: (id: string, value: any) => void;
+const Textarea = styled.textarea`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 25px;
+  width: 700px;
+  height: 230px;
+  border: 1px solid var(--Line-Gray, #d9d9d9);
+
+  ::placeholder {
+    text-align: center;
+    color: var(--Text-Main, #414141);
+
+    font-family: "Spoqa Han Sans Neo";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+`;
+
+interface CreateIntroduceItemIProps {
+  introduceParams: IntroduceParams;
+  handleOnChangeIntroduceParams: (key: string, value: any) => void;
 }
 
-const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
-  const { topBannerItems, handleOnChangeTopBannerItems } = props;
+const CreateIntroduceItem: React.FC<CreateIntroduceItemIProps> = (props) => {
+  const { introduceParams, handleOnChangeIntroduceParams } = props;
 
   const hanldeImageUpload = (event: any) => {
     const file = event.target.files[0];
 
-    handleOnChangeTopBannerItems("thumbnail", file);
+    handleOnChangeIntroduceParams("thumbnail", file);
   };
 
   return (
@@ -141,55 +144,11 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
           <InputForm
             placeholder="제목을 입력해주세요."
             onChange={(e: any) => {
-              handleOnChangeTopBannerItems("title", e.target.value);
+              handleOnChangeIntroduceParams("title", e.target.value);
             }}
-            value={topBannerItems.title}
+            value={introduceParams.title}
           />
-          {topBannerItems.title.length}/25
-        </ContentsForm>
-      </ItemContainer>
-      <ItemContainer>
-        <TitleForm>노출기간</TitleForm>
-        <ContentsForm>
-          <Row gap="24px">
-            <Row gap="8px">
-              <CheckBox
-                type="checkbox"
-                defaultChecked={topBannerItems.is_always_show === "Y"}
-                checked={topBannerItems.is_always_show === "Y"}
-                onChange={() => {
-                  handleOnChangeTopBannerItems(
-                    "is_always_show",
-                    topBannerItems.is_always_show === "Y" ? "N" : "Y"
-                  );
-                }}
-              />{" "}
-              상시
-            </Row>
-            <Row gap="8px">
-              기간설정{" "}
-              <Calendar
-                type="date"
-                min={dayjs().format("YYYY-MM-DDTHH:mm")}
-                value={topBannerItems.show_started_at}
-                onChange={(e: any) => {
-                  handleOnChangeTopBannerItems(
-                    "show_started_at",
-                    e.target.value
-                  );
-                }}
-              />{" "}
-              ~{" "}
-              <Calendar
-                type="date"
-                min={dayjs().format("YYYY-MM-DDTHH:mm")}
-                value={topBannerItems.show_ended_at}
-                onChange={(e: any) => {
-                  handleOnChangeTopBannerItems("show_ended_at", e.target.value);
-                }}
-              />
-            </Row>
-          </Row>
+          {introduceParams.title.length}/25
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
@@ -199,10 +158,10 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
             <Row gap="8px">
               <Radio
                 type="radio"
-                defaultChecked={topBannerItems.is_show === "Y"}
-                checked={topBannerItems.is_show === "Y"}
+                defaultChecked={introduceParams.is_show === "Y"}
+                checked={introduceParams.is_show === "Y"}
                 onChange={() => {
-                  handleOnChangeTopBannerItems("is_show", "Y");
+                  handleOnChangeIntroduceParams("is_show", "Y");
                 }}
               />
               노출
@@ -210,10 +169,10 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
             <Row gap="8px">
               <Radio
                 type="radio"
-                defaultChecked={topBannerItems.is_show === "N"}
-                checked={topBannerItems.is_show === "N"}
+                defaultChecked={introduceParams.is_show === "N"}
+                checked={introduceParams.is_show === "N"}
                 onChange={() => {
-                  handleOnChangeTopBannerItems("is_show", "N");
+                  handleOnChangeIntroduceParams("is_show", "N");
                 }}
               />
               비노출
@@ -235,21 +194,33 @@ const CreateBannerItem: React.FC<CreateBannerItemIProps> = (props) => {
                 style={{ display: "none" }}
                 onChange={hanldeImageUpload}
               />
-              (사이즈 : 1920x560px(px), 용량 2MB이하, 형식: jpg, png)
+              (사이즈 : 413x271(px), 용량 2MB이하, 형식: jpg, png)
             </Row>
-            {topBannerItems.thumbnail &&
-              !(topBannerItems.thumbnail instanceof File) && (
+            {introduceParams.thumbnail &&
+              !(introduceParams.thumbnail instanceof File) && (
                 <img
-                  src={topBannerItems.thumbnail}
+                  src={introduceParams.thumbnail}
                   alt="image thumbnail"
-                  style={{ width: "650px" }}
+                  style={{ width: "295px" }}
                 />
               )}
           </Column>
+        </ContentsForm>
+      </ItemContainer>
+      <ItemContainer>
+        <TitleForm>내용</TitleForm>
+        <ContentsForm>
+          <Textarea
+            placeholder="내용을 입력하세요."
+            defaultValue={introduceParams.desc}
+            onChange={(e: any) => {
+              handleOnChangeIntroduceParams("desc", e.target.value);
+            }}
+          />
         </ContentsForm>
       </ItemContainer>
     </Container>
   );
 };
 
-export default CreateBannerItem;
+export default CreateIntroduceItem;

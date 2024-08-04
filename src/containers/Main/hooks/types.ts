@@ -32,3 +32,28 @@ export interface AdminUser {
   user_name: string;
   email: string;
 }
+
+export interface Introduce {
+  total_records: number;
+  last_page: number;
+  records: RecordsEntity[] | [];
+  page: number;
+  page_size: number;
+}
+export interface RecordsEntity {
+  id: number;
+  title: string;
+  user_id: string;
+  img_url: string;
+  desc: string;
+  is_show: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at?: null;
+  admin_user: AdminUser;
+}
+export interface AdminUser {
+  user_id: string;
+  user_name: string;
+  email: string;
+}

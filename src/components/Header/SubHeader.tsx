@@ -69,7 +69,7 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
             </SubItem>
             <SubItem
               $isActiveButton={location.pathname.includes("/introduce")}
-              onClick={() => navigate("/main/introduce")}
+              onClick={() => navigate("/main/introduce?content=view")}
             >
               소개
             </SubItem>
