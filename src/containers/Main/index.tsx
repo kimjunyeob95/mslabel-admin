@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Introduce from "./components/Introduce/Introduce";
 
 import TopBanner from "./components/TopBanner/TopBanner";
+import Introduce2Page from "./components/Introduce2/Introduce2";
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +26,8 @@ const MainPage = () => {
         return <TopBanner />;
       case "introduce":
         return <Introduce />;
+      case "subIntro":
+        return <Introduce2Page />;
       default:
         return <></>;
     }

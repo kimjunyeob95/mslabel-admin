@@ -1,12 +1,15 @@
-import dayjs from "dayjs";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import Row from "../../../../components/Row";
 import CommonTable from "../../../../components/Table";
+import { useNavigate } from "react-router-dom";
 import Text from "../../../../components/Text";
-import { BannerFilter, Introduce, RecordsEntity } from "../../hooks/types";
+import {
+  BannerFilter,
+  Introduce2,
+  Introduce2RecordsEntity,
+} from "../../hooks/types";
+import dayjs from "dayjs";
 
 const Container = styled.div`
   display: flex;
@@ -85,15 +88,15 @@ const SearchBox = styled.input`
   line-height: 24px; /* 150% */
 `;
 
-interface IntroduceListIProps {
-  introduceList: Introduce;
+interface Introduce2ListIProps {
+  introduceList: Introduce2;
   introduceFilter: BannerFilter;
   handleIntroduceFilter: (key: string, value: string) => void;
   handleFilterIntroduceItems: () => void;
-  handleNavigateToEditPage: (item: RecordsEntity) => void;
+  handleNavigateToEditPage: (item: Introduce2RecordsEntity) => void;
 }
 
-const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
+const Introduce2List: React.FC<Introduce2ListIProps> = (props) => {
   const {
     introduceList,
     introduceFilter,
@@ -101,7 +104,6 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
     handleFilterIntroduceItems,
     handleNavigateToEditPage,
   } = props;
-
   const navigate = useNavigate();
 
   return (
@@ -194,7 +196,7 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
             color: "#fff",
           }}
           onClick={() => {
-            navigate("/main/introduce?content=create");
+            navigate("/main/subIntro?content=create");
           }}
         >
           신규 등록
@@ -206,7 +208,6 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
             <th>ID</th>
             <th>이미지</th>
             <th>제목</th>
-            <th>내용</th>
             <th>작성자</th>
             <th>노출상태</th>
             <th>등록일</th>
@@ -220,28 +221,22 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
                   className="item"
                   key={idx}
                   onClick={() => handleNavigateToEditPage(item)}
+                  style={{ height: "160px" }}
                 >
                   <td style={{ maxWidth: "65px" }}>{item.id}</td>
-                  <td>
+                  <td style={{ minWidth: "335px" }}>
                     <img
                       src={item.img_url}
                       alt={`thumbnail ${idx}`}
-                      style={{ width: "150px", height: "43px" }}
+                      style={{ width: "82px", height: "162px" }}
                     />
                   </td>
-                  <td style={{ minWidth: "226px", textAlign: "left" }}>
+                  <td style={{ minWidth: "400px", textAlign: "left" }}>
                     {item.title}
                   </td>
-                  <td
-                    style={{
-                      minWidth: "331px",
-                      textAlign: "left",
-                      whiteSpace: "wrap",
-                    }}
-                  >
-                    {item.desc}
+                  <td style={{ minWidth: "160px" }}>
+                    {item.admin_user.user_name}
                   </td>
-                  <td>{item.admin_user.user_name}</td>
                   <td>
                     <SearchTitle
                       style={{
@@ -256,7 +251,9 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
                       {item.is_show === "Y" ? "노출" : "비노출"}
                     </SearchTitle>
                   </td>
-                  <td>{dayjs(item.created_at).format("YY.MM.DD")}</td>
+                  <td style={{ minWidth: "110px" }}>
+                    {dayjs(item.created_at).format("YY.MM.DD")}
+                  </td>
                 </tr>
               );
             })}
@@ -267,4 +264,4 @@ const IntroduceList: React.FC<IntroduceListIProps> = (props) => {
   );
 };
 
-export default IntroduceList;
+export default Introduce2List;

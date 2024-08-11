@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Column from "../../../../components/Column";
+
 import Row from "../../../../components/Row";
-import { IntroduceParams } from "../../hooks/useMainPageIntroduceHooks";
+import { Introduce2Params } from "../../hooks/useMainPageIntroduce2Hooks";
+import Column from "../../../../components/Column";
 
 const Container = styled.div`
   display: flex;
@@ -100,34 +101,12 @@ const Radio = styled.input`
   stroke: var(--Line-Gray_2, #acacac);
 `;
 
-const Textarea = styled.textarea`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 25px;
-  width: 700px;
-  height: 230px;
-  border: 1px solid var(--Line-Gray, #d9d9d9);
-
-  ::placeholder {
-    text-align: center;
-    color: var(--Text-Main, #414141);
-
-    font-family: "Spoqa Han Sans Neo";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-  }
-`;
-
-interface CreateIntroduceItemIProps {
-  introduceParams: IntroduceParams;
+interface CreateIntroduce2ItemIProps {
+  introduceParams: Introduce2Params;
   handleOnChangeIntroduceParams: (key: string, value: any) => void;
 }
 
-const CreateIntroduceItem: React.FC<CreateIntroduceItemIProps> = (props) => {
+const CreateIntroduce2Item: React.FC<CreateIntroduce2ItemIProps> = (props) => {
   const { introduceParams, handleOnChangeIntroduceParams } = props;
 
   const hanldeImageUpload = (event: any) => {
@@ -194,33 +173,21 @@ const CreateIntroduceItem: React.FC<CreateIntroduceItemIProps> = (props) => {
                 style={{ display: "none" }}
                 onChange={hanldeImageUpload}
               />
-              (사이즈 : 413x271(px), 용량 2MB이하, 형식: jpg, png)
+              (사이즈 : 293x581(px), 용량 2MB이하, 형식: jpg, png)
             </Row>
             {introduceParams.thumbnail &&
               !(introduceParams.thumbnail instanceof File) && (
                 <img
                   src={introduceParams.thumbnail}
                   alt="introduce thumbnail"
-                  style={{ width: "295px" }}
+                  style={{ width: "82px" }}
                 />
               )}
           </Column>
-        </ContentsForm>
-      </ItemContainer>
-      <ItemContainer>
-        <TitleForm>내용</TitleForm>
-        <ContentsForm>
-          <Textarea
-            placeholder="내용을 입력하세요."
-            defaultValue={introduceParams.desc}
-            onChange={(e: any) => {
-              handleOnChangeIntroduceParams("desc", e.target.value);
-            }}
-          />
         </ContentsForm>
       </ItemContainer>
     </Container>
   );
 };
 
-export default CreateIntroduceItem;
+export default CreateIntroduce2Item;

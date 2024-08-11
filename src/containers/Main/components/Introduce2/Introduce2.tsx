@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { parse } from "query-string-for-all";
-
-import Column from "../../../../components/Column";
 import Row from "../../../../components/Row";
+import Column from "../../../../components/Column";
+import SaveButton from "../Common/SaveButton";
 import {
   ICON_NEXT,
   ICON_NEXT_ALL,
   ICON_PREV,
   ICON_PREV_ALL,
 } from "../../../../assets/image";
-import IntroduceList from "./IntroduceList";
-import { useMainPageIntroduceHooks } from "../../hooks/useMainPageIntroduceHooks";
-import CreateIntroduceItem from "./CreateIntroduceItem";
-import SaveButton from "../Common/SaveButton";
+import { useLocation } from "react-router-dom";
+import { parse } from "query-string-for-all";
+import Introduce2List from "./Introduce2List";
+import CreateIntroduce2Item from "./CreateIntroduce2Item";
+import { useMainPageIntroduce2Hooks } from "../../hooks/useMainPageIntroduce2Hooks";
 
 const Title = styled.div`
   color: #000;
@@ -49,14 +48,14 @@ const ArrowImage = styled.img`
   cursor: pointer;
 `;
 
-const Introduce = () => {
+const Introduce2Page = () => {
   const location = useLocation();
   const { content, id } = parse(location.search);
 
   const {
     introduceList,
-    introduceFilter,
     introduceParams,
+    introduceFilter,
     handleOnChangeIntroduceParams,
     handleFilterIntroduceItems,
     handleCreateIntroduceItem,
@@ -64,7 +63,7 @@ const Introduce = () => {
     handleDeleteIntroduceItem,
     handleNavigateToEditPage,
     handleIntroduceFilter,
-  } = useMainPageIntroduceHooks();
+  } = useMainPageIntroduce2Hooks();
 
   const [paginationIndex, setPaginationIndex] = useState<number>(1);
   const pageNationLength = introduceList
@@ -129,14 +128,14 @@ const Introduce = () => {
     return element;
   };
 
-  const renderIntroduceContents = (): JSX.Element => {
+  const renderIntroduce2Contents = (): JSX.Element => {
     switch (content) {
       case "view": {
         return (
           <React.Fragment>
             {introduceList && (
               <Column gap="40px">
-                <IntroduceList
+                <Introduce2List
                   introduceList={introduceList}
                   introduceFilter={introduceFilter}
                   handleIntroduceFilter={handleIntroduceFilter}
@@ -178,7 +177,7 @@ const Introduce = () => {
       case "create": {
         return (
           <React.Fragment>
-            <CreateIntroduceItem
+            <CreateIntroduce2Item
               introduceParams={introduceParams}
               handleOnChangeIntroduceParams={handleOnChangeIntroduceParams}
             />
@@ -196,7 +195,7 @@ const Introduce = () => {
       case "edit": {
         return (
           <React.Fragment>
-            <CreateIntroduceItem
+            <CreateIntroduce2Item
               introduceParams={introduceParams}
               handleOnChangeIntroduceParams={handleOnChangeIntroduceParams}
             />
@@ -231,11 +230,11 @@ const Introduce = () => {
   return (
     <React.Fragment>
       <Row style={{ width: "100%", justifyContent: "flex-start" }}>
-        <Title>소개_명성은 이런 일을 합니다</Title>
+        <Title>소개2_브랜드 라벨 전문 명성라벨입니다</Title>
       </Row>
-      <Column gap="40px">{renderIntroduceContents()}</Column>
+      <Column gap="40px">{renderIntroduce2Contents()}</Column>
     </React.Fragment>
   );
 };
 
-export default Introduce;
+export default Introduce2Page;

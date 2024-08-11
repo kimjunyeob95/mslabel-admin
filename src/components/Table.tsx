@@ -15,7 +15,7 @@ const TableContainer = styled.div`
 `;
 
 const Table = styled.table`
-  width: auto !important;
+  width: auto;
   height: 40px;
   table-layout: fixed;
   white-space: nowrap;
@@ -54,13 +54,14 @@ const Table = styled.table`
 interface TableIProps {
   thElement: React.ReactNode;
   tdElement: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const CommonTable: React.FC<TableIProps> = (props) => {
-  const { thElement, tdElement } = props;
+  const { thElement, tdElement, style } = props;
   return (
     <TableContainer>
-      <Table>
+      <Table style={{ ...style }}>
         <tbody>
           <tr className="title">{thElement}</tr>
           {tdElement}
