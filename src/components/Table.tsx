@@ -59,6 +59,7 @@ interface TableIProps {
 
 const CommonTable: React.FC<TableIProps> = (props) => {
   const { thElement, tdElement, style } = props;
+
   return (
     <TableContainer>
       <Table style={{ ...style }}>

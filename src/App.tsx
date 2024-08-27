@@ -27,7 +27,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/main/:contents" element={<MainPage />} />
-            <Route path="/board" element={<BoardPage />} />
+            <Route path="/board/:contents" element={<BoardPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

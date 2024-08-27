@@ -53,8 +53,18 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
           <>
             <SubItem $isActiveButton={false}>최근 게시물_고객</SubItem>
             <SubItem $isActiveButton={false}>최근 게시물_관리자</SubItem>
-            <SubItem $isActiveButton={false}>대표 메뉴 설정</SubItem>
-            <SubItem $isActiveButton={false}>서브 메뉴 설정</SubItem>
+            <SubItem
+              $isActiveButton={location.pathname.includes("/menu")}
+              onClick={() => navigate("/board/menu?content=view")}
+            >
+              대표 메뉴 설정
+            </SubItem>
+            <SubItem
+              $isActiveButton={location.pathname.includes("/subMenu")}
+              onClick={() => navigate("/board/subMenu?content=view")}
+            >
+              서브 메뉴 설정
+            </SubItem>
           </>
         );
       }
