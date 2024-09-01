@@ -85,6 +85,13 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
             onClick={() => {
               handelOnClickHeaderItem(item.title);
               setSelectedItem(item.title);
+
+              switch (item.id) {
+                case 3: {
+                  navigate("/basicLabel/all");
+                  return;
+                }
+              }
             }}
           >
             {item.title}

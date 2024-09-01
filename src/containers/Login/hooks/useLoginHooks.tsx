@@ -24,7 +24,7 @@ export const useLoginHooks = () => {
       if (response) {
         localStorage.setItem("token", `Bearer ${response.data.token}`);
 
-        navigate("/main");
+        navigate("/board/menu?content=view");
       }
     } catch (error) {
       console.log(error, "login error");

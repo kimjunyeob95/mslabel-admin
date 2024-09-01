@@ -57,7 +57,7 @@ const MainMenuList = () => {
         }
         tdElement={
           <React.Fragment>
-            {mainMenuList!.map((item, idx) => {
+            {mainMenuList?.map((item, idx) => {
               return (
                 <tr className="item" key={idx}>
                   <td style={{ padding: "10px" }}>

@@ -5,6 +5,7 @@ import PrivateRoute from "./containers/PrivateRoute";
 import styled from "styled-components";
 import Header from "./components/Header";
 import BoardPage from "./containers/Board";
+import BasicLabelPage from "./containers/BasicLabel";
 
 const AppLayOut = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/main/:contents" element={<MainPage />} />
             <Route path="/board/:contents" element={<BoardPage />} />
+            <Route path="/basicLabel/:contents" element={<BasicLabelPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
