@@ -5,6 +5,8 @@ import { SubMenuList } from "./types";
 
 export const useSubMenuListHooks = () => {
   const [subMenuList, setSubMenuList] = useState<SubMenuList>();
+  const [basicLabelSubMenuList, setBasicLabelSubMenuList] =
+    useState<SubMenuList>();
 
   const getSubMenuList = async () => {
     try {
@@ -20,9 +22,23 @@ export const useSubMenuListHooks = () => {
     }
   };
 
+  const getSubBasicLabelList = async () => {
+    try {
+      const response = await instance.get(
+        `${ADMIN_SUB_MENU}?page=1&page_size=50&group_id=3`
+      );
+
+      if (response) {
+        setBasicLabelSubMenuList(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSubMenuList();
   }, []);
 
-  return { subMenuList };
+  return { subMenuList, basicLabelSubMenuList, getSubBasicLabelList };
 };

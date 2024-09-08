@@ -127,9 +127,25 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
       case "일반라벨": {
         return (
           <>
+            <SubItem
+              $isActiveButton={location.pathname.includes(`basicLabel/all`)}
+              onClick={() => {
+                navigate(`/basicLabel/all?content=list`);
+              }}
+            >
+              전체 게시물
+            </SubItem>
             {headerItem[2].sub_menus?.map((item, idx) => {
               return (
-                <SubItem $isActiveButton={false} key={idx}>
+                <SubItem
+                  $isActiveButton={location.pathname.includes(
+                    `basicLabel/${item.id}`
+                  )}
+                  key={idx}
+                  onClick={() => {
+                    navigate(`/basicLabel/${item.id}`);
+                  }}
+                >
                   {item.title}
                 </SubItem>
               );

@@ -52,6 +52,13 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
 
       return;
     }
+
+    if (location.pathname.includes("basicLabel")) {
+      handelOnClickHeaderItem("일반라벨");
+      setSelectedItem("일반라벨");
+
+      return;
+    }
   }, [location]);
 
   return (
@@ -88,7 +95,8 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
 
               switch (item.id) {
                 case 3: {
-                  navigate("/basicLabel/all");
+                  navigate(`/basicLabel/all?content=list`);
+
                   return;
                 }
               }
