@@ -18,8 +18,6 @@ const Container = styled.div`
   margin-left: 40px;
   width: 100%;
   max-width: 1470px;
-
-  border: 1px solid red;
 `;
 
 const Title = styled.div`
@@ -34,7 +32,7 @@ const Title = styled.div`
 const BasicLabelPage = () => {
   const location = useLocation();
   const params = useParams<{ contents: string }>();
-  const { content, id } = parse(location.search);
+  const { content } = parse(location.search);
 
   console.log(params.contents, content);
 
@@ -45,18 +43,35 @@ const BasicLabelPage = () => {
     handleCreateBasicLabel,
   } = useBasicLabelHooks();
 
+  const renderContents = (): JSX.Element => {
+    switch (params.contents) {
+      case "create": {
+        return (
+          <CreateLabelItems
+            basicLabelParams={basicLabelParams}
+            handleChangeBasicLabelParams={handleChangeBasicLabelParams}
+            handleCreateBasicLabel={handleCreateBasicLabel}
+          />
+        );
+      }
+      default: {
+        return (
+          <React.Fragment>
+            {basicLabelList && (
+              <BasicLabelList basicLabelList={basicLabelList} />
+            )}
+          </React.Fragment>
+        );
+      }
+    }
+  };
+
   return (
     <Container>
       <Row style={{ width: "100%", justifyContent: "flex-start" }}>
         <Title>일반라벨</Title>
       </Row>
-      {basicLabelList && <BasicLabelList basicLabelList={basicLabelList} />}
-
-      <CreateLabelItems
-        basicLabelParams={basicLabelParams}
-        handleChangeBasicLabelParams={handleChangeBasicLabelParams}
-        handleCreateBasicLabel={handleCreateBasicLabel}
-      />
+      {renderContents()}
     </Container>
   );
 };

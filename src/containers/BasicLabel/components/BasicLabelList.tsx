@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import dayjs from "dayjs";
+
 import Row from "../../../components/Row";
 import Text from "../../../components/Text";
 import { useSubMenuListHooks } from "../../Board/hooks/useSubMenuListHooks";
 import { BasicLabelListType } from "../hooks/types";
 import CommonTable from "../../../components/Table";
-import dayjs from "dayjs";
 
 const Container = styled.div`
   display: flex;
@@ -90,6 +92,7 @@ interface BasicLabelListIProps {
 
 const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
   const { basicLabelList } = props;
+  const navigate = useNavigate();
 
   const { basicLabelSubMenuList, getSubBasicLabelList } = useSubMenuListHooks();
 
@@ -204,7 +207,7 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
             color: "#fff",
           }}
           onClick={() => {
-            // navigate("/main/banner?content=create");
+            navigate("/basicLabel/create");
           }}
         >
           신규 등록

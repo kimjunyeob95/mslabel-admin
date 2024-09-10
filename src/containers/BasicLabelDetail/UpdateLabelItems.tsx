@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Row from "../../../components/Row";
-import Column from "../../../components/Column";
-import { BasicLabelParams } from "../hooks/useBasicLabelHooks";
-import SaveButton from "../../Main/components/Common/SaveButton";
+import Column from "../../components/Column";
+import Row from "../../components/Row";
+import SaveButton from "../Main/components/Common/SaveButton";
 
 const Container = styled.div`
   display: flex;
@@ -123,27 +122,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-interface CreateLabelItemsIProps {
-  basicLabelParams: BasicLabelParams;
-  handleChangeBasicLabelParams: (key: string, value: any) => void;
-  handleCreateBasicLabel: () => void;
-}
-
-const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
-  const {
-    basicLabelParams,
-    handleChangeBasicLabelParams,
-    handleCreateBasicLabel,
-  } = props;
-
-  const hanldeImageUpload = (key: string, event: any) => {
-    const file = event.target.files[0];
-
-    handleChangeBasicLabelParams(key, file);
-  };
-
-  console.log(basicLabelParams, "<<");
-
+const UpdateLabelItems = () => {
   return (
     <Container>
       <ItemContainer>
@@ -153,20 +132,20 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
             <Row gap="8px">
               <Radio
                 type="radio"
-                checked={basicLabelParams.sub_id === 9}
-                onChange={() => {
-                  handleChangeBasicLabelParams("sub_id", 9);
-                }}
+                // checked={basicLabelParams.sub_id === 9}
+                // onChange={() => {
+                //   handleChangeBasicLabelParams("sub_id", 9);
+                // }}
               />
               업종별 라벨
             </Row>
             <Row gap="8px">
               <Radio
                 type="radio"
-                checked={basicLabelParams.sub_id === 10}
-                onChange={() => {
-                  handleChangeBasicLabelParams("sub_id", 10);
-                }}
+                // checked={basicLabelParams.sub_id === 10}
+                // onChange={() => {
+                //   handleChangeBasicLabelParams("sub_id", 10);
+                // }}
               />
               특수 라벨
             </Row>
@@ -179,7 +158,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
           <InputForm
             placeholder="제목을 입력해주세요."
             onChange={(e: any) => {
-              handleChangeBasicLabelParams("title", e.target.value);
+              // handleChangeBasicLabelParams("title", e.target.value);
             }}
           />
         </ContentsForm>
@@ -191,20 +170,20 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
             <Row gap="8px">
               <Radio
                 type="radio"
-                checked={basicLabelParams.is_show === "Y"}
-                onChange={() => {
-                  handleChangeBasicLabelParams("is_show", "Y");
-                }}
+                // checked={basicLabelParams.is_show === "Y"}
+                // onChange={() => {
+                //   handleChangeBasicLabelParams("is_show", "Y");
+                // }}
               />
               노출
             </Row>
             <Row gap="8px">
               <Radio
                 type="radio"
-                checked={basicLabelParams.is_show === "N"}
-                onChange={() => {
-                  handleChangeBasicLabelParams("is_show", "N");
-                }}
+                // checked={basicLabelParams.is_show === "N"}
+                // onChange={() => {
+                //   handleChangeBasicLabelParams("is_show", "N");
+                // }}
               />
               비노출
             </Row>
@@ -217,7 +196,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
           <Textarea
             placeholder="내용을 입력하세요."
             onChange={(e: any) => {
-              handleChangeBasicLabelParams("desc", e.target.value);
+              // handleChangeBasicLabelParams("desc", e.target.value);
             }}
           />
         </ContentsForm>
@@ -234,7 +213,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
                 type="file"
                 id="input-file"
                 style={{ display: "none" }}
-                onChange={(e) => hanldeImageUpload("main_img", e)}
+                // onChange={(e) => hanldeImageUpload("main_img", e)}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
@@ -256,7 +235,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
                 onChange={(e: any) => {
                   const file = e.target.files[0];
 
-                  handleChangeBasicLabelParams("bottom_img1", file);
+                  // handleChangeBasicLabelParams("bottom_img1", file);
                 }}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
@@ -269,14 +248,14 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
-              <label className="input-file-button" htmlFor="input-file-bottom2">
+              <label className="input-file-button" htmlFor="input-file">
                 파일선택
               </label>
               <input
                 type="file"
-                id="input-file-bottom2"
+                id="input-file"
                 style={{ display: "none" }}
-                onChange={(e) => hanldeImageUpload("bottom_img2", e)}
+                // onChange={(e) => hanldeImageUpload("bottom_img2", e)}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
@@ -288,14 +267,14 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
-              <label className="input-file-button" htmlFor="input-file-bottom3">
+              <label className="input-file-button" htmlFor="input-file">
                 파일선택
               </label>
               <input
                 type="file"
-                id="input-file-bottom3"
+                id="input-file"
                 style={{ display: "none" }}
-                onChange={(e) => hanldeImageUpload("bottom_img3", e)}
+                // onChange={(e) => hanldeImageUpload("bottom_img3", e)}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
@@ -307,14 +286,14 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
-              <label className="input-file-button" htmlFor="input-file-bottom4">
+              <label className="input-file-button" htmlFor="input-file">
                 파일선택
               </label>
               <input
                 type="file"
-                id="input-file-bottom4"
+                id="input-file"
                 style={{ display: "none" }}
-                onChange={(e) => hanldeImageUpload("bottom_img4", e)}
+                // onChange={(e) => hanldeImageUpload("bottom_img4", e)}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
@@ -326,14 +305,14 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
-              <label className="input-file-button" htmlFor="input-file-bottom5">
+              <label className="input-file-button" htmlFor="input-file">
                 파일선택
               </label>
               <input
                 type="file"
-                id="input-file-bottom5"
+                id="input-file"
                 style={{ display: "none" }}
-                onChange={(e) => hanldeImageUpload("bottom_img5", e)}
+                // onChange={(e) => hanldeImageUpload("bottom_img5", e)}
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
@@ -345,10 +324,10 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <InputForm
             placeholder="원단을 입력하세요."
-            value={basicLabelParams.material}
-            onChange={(e: any) => {
-              handleChangeBasicLabelParams("material", e.target.value);
-            }}
+            // value={basicLabelParams.material}
+            // onChange={(e: any) => {
+            //   handleChangeBasicLabelParams("material", e.target.value);
+            // }}
           />
         </ContentsForm>
       </ItemContainer>
@@ -357,10 +336,10 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <InputForm
             placeholder="사이즈를 입력하세요."
-            value={basicLabelParams.size}
-            onChange={(e: any) => {
-              handleChangeBasicLabelParams("size", e.target.value);
-            }}
+            // value={basicLabelParams.size}
+            // onChange={(e: any) => {
+            //   handleChangeBasicLabelParams("size", e.target.value);
+            // }}
           />
         </ContentsForm>
       </ItemContainer>
@@ -369,10 +348,10 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <InputForm
             placeholder="형태를 입력하세요."
-            value={basicLabelParams.shape}
-            onChange={(e: any) => {
-              handleChangeBasicLabelParams("shape", e.target.value);
-            }}
+            // value={basicLabelParams.shape}
+            // onChange={(e: any) => {
+            //   handleChangeBasicLabelParams("shape", e.target.value);
+            // }}
           />
         </ContentsForm>
       </ItemContainer>
@@ -381,10 +360,10 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         <ContentsForm>
           <InputForm
             placeholder="#000, #000와 같이 키워드를 입력하세요."
-            value={basicLabelParams.keywords}
-            onChange={(e: any) => {
-              handleChangeBasicLabelParams("keywords", e.target.value);
-            }}
+            // value={basicLabelParams.keywords}
+            // onChange={(e: any) => {
+            //   handleChangeBasicLabelParams("keywords", e.target.value);
+            // }}
           />
         </ContentsForm>
       </ItemContainer>
@@ -394,7 +373,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
       >
         <SaveButton
           onClick={() => {
-            handleCreateBasicLabel();
+            // handleCreateBasicLabel();
           }}
           text="저장"
         />
@@ -403,4 +382,4 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
   );
 };
 
-export default CreateLabelItems;
+export default UpdateLabelItems;

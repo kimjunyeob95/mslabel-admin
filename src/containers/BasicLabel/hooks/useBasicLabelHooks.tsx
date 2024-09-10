@@ -79,7 +79,8 @@ export const useBasicLabelHooks = () => {
         navigate("/basicLabel/all?content=list");
         window.location.reload();
       }
-    } catch (error) {
+    } catch (error: any) {
+      alert(error.response.data.error.message);
       console.log(error, "<<<");
     }
   };

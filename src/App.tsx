@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import BoardPage from "./containers/Board";
 import BasicLabelPage from "./containers/BasicLabel";
+import BasicLabelDetailPage from "./containers/BasicLabelDetail";
 
 const AppLayOut = styled.div`
   display: flex;
@@ -30,6 +31,10 @@ function App() {
             <Route path="/main/:contents" element={<MainPage />} />
             <Route path="/board/:contents" element={<BoardPage />} />
             <Route path="/basicLabel/:contents" element={<BasicLabelPage />} />
+            <Route
+              path="/basicLabel/detail/:id"
+              element={<BasicLabelDetailPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

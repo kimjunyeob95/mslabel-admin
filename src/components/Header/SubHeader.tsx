@@ -128,9 +128,13 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
         return (
           <>
             <SubItem
-              $isActiveButton={location.pathname.includes(`basicLabel/all`)}
+              $isActiveButton={
+                location.pathname.includes(`basicLabel/all`) ||
+                location.pathname.includes("basicLabel/detail") ||
+                location.pathname.includes(`basicLabel/create`)
+              }
               onClick={() => {
-                navigate(`/basicLabel/all?content=list`);
+                navigate(`/basicLabel/all`);
               }}
             >
               전체 게시물
