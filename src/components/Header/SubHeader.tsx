@@ -33,6 +33,7 @@ const SubItem = styled.div<{ $isActiveButton: boolean }>`
   font-style: normal;
   font-weight: 500;
   line-height: 21.333px; /* 106.667% */
+  cursor: pointer;
 `;
 
 interface SubHeaderIProps {
@@ -127,27 +128,29 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
       case "일반라벨": {
         return (
           <>
-            <SubItem
+            {/* <SubItem
               $isActiveButton={
-                location.pathname.includes(`basicLabel/all`) ||
+                location.pathname.includes(`label/basic`) ||
                 location.pathname.includes("basicLabel/detail") ||
                 location.pathname.includes(`basicLabel/create`)
               }
               onClick={() => {
-                navigate(`/basicLabel/all`);
+                navigate(`/label/basic?group_id=${headerItem[2].id}`);
               }}
             >
               전체 게시물
-            </SubItem>
+            </SubItem> */}
             {headerItem[2].sub_menus?.map((item, idx) => {
               return (
                 <SubItem
-                  $isActiveButton={location.pathname.includes(
-                    `basicLabel/${item.id}`
+                  $isActiveButton={location.search.includes(
+                    `sub_id=${item.id}`
                   )}
                   key={idx}
                   onClick={() => {
-                    navigate(`/basicLabel/${item.id}`);
+                    navigate(
+                      `/label/basic?group_id=${headerItem[2].id}&sub_id=${item.id}`
+                    );
                   }}
                 >
                   {item.title}
@@ -162,7 +165,17 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
           <>
             {headerItem[3].sub_menus?.map((item, idx) => {
               return (
-                <SubItem $isActiveButton={false} key={idx}>
+                <SubItem
+                  $isActiveButton={location.search.includes(
+                    `sub_id=${item.id}`
+                  )}
+                  key={idx}
+                  onClick={() => {
+                    navigate(
+                      `/label/digital?group_id=${headerItem[3].id}&sub_id=${item.id}`
+                    );
+                  }}
+                >
                   {item.title}
                 </SubItem>
               );

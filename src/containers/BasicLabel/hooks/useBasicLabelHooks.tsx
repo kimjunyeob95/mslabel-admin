@@ -24,12 +24,12 @@ export interface BasicLabelParams {
 
 export const useBasicLabelHooks = () => {
   const location = useLocation();
-  const params = useParams<{ contents: string }>();
 
   const navigate = useNavigate();
-  const { content, id } = parse(location.search);
+  const { group_id, sub_id } = parse(location.search);
 
   const [basicLabelList, setBasicLabelList] = useState<BasicLabelListType>();
+  const [pageSize, setPageSize] = useState<number>(1);
   const [basicLabelParams, setBasicLabelParams] = useState<BasicLabelParams>({
     sub_id: 0,
     title: "",
@@ -44,19 +44,17 @@ export const useBasicLabelHooks = () => {
   });
 
   const handleChangeBasicLabelParams = (key: string, value: any) => {
-    console.log(key, value);
     setBasicLabelParams({ ...basicLabelParams, [key]: value });
   };
 
   const handleGetBasicLabelList = async () => {
     try {
       const response = await instance.get(
-        `${ADMIN_BOARD_PRODUCT}?group_id=3&sub_id=${params.contents}&page=1&page_size=20&sort=created_at|desc`
+        `${ADMIN_BOARD_PRODUCT}?group_id=${group_id}&sub_id=${sub_id}&page=${pageSize}&page_size=10&sort=created_at|desc`
       );
 
       if (response) {
         setBasicLabelList(response.data.data);
-        console.log(JSON.stringify(response.data.data), response, "<<<<");
       }
     } catch (error) {
       console.log(error, "<<<");
@@ -76,7 +74,13 @@ export const useBasicLabelHooks = () => {
       );
 
       if (response) {
-        navigate("/basicLabel/all?content=list");
+        navigate(
+          `/label/${
+            response.data.data.group_id === 3 ? "basic" : "digital"
+          }?group_id=${response.data.data.group_id}&sub_id=${
+            response.data.data.sub_id
+          }`
+        );
         window.location.reload();
       }
     } catch (error: any) {
@@ -87,7 +91,7 @@ export const useBasicLabelHooks = () => {
 
   useEffect(() => {
     handleGetBasicLabelList();
-  }, [params.contents]);
+  }, [group_id, sub_id]);
 
   return {
     basicLabelList,

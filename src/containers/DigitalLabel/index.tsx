@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
-import CreateLabelItems from "./components/CreateLabelItems";
 import Row from "../../components/Row";
-import { useBasicLabelHooks } from "./hooks/useBasicLabelHooks";
-import { parse } from "query-string-for-all";
-import { useLocation, useParams } from "react-router-dom";
-import BasicLabelList from "./components/BasicLabelList";
+import CreateLabelItems from "../BasicLabel/components/CreateLabelItems";
+import BasicLabelList from "../BasicLabel/components/BasicLabelList";
+import { useBasicLabelHooks } from "../BasicLabel/hooks/useBasicLabelHooks";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +27,7 @@ const Title = styled.div`
   line-height: 42px; /* 131.25% */
 `;
 
-const BasicLabelPage = () => {
+const DigitalLabelPage = () => {
   const params = useParams<{ contents: string }>();
 
   const {
@@ -69,11 +67,11 @@ const BasicLabelPage = () => {
   return (
     <Container>
       <Row style={{ width: "100%", justifyContent: "flex-start" }}>
-        <Title>일반라벨</Title>
+        <Title>디지털 인쇄</Title>
       </Row>
       {renderContents()}
     </Container>
   );
 };
 
-export default BasicLabelPage;
+export default DigitalLabelPage;

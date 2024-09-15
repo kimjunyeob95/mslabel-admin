@@ -7,6 +7,9 @@ import Header from "./components/Header";
 import BoardPage from "./containers/Board";
 import BasicLabelPage from "./containers/BasicLabel";
 import BasicLabelDetailPage from "./containers/BasicLabelDetail";
+import CreateSubMenu from "./containers/Board/SubMenuList/CreateSubMenu";
+import DigitalLabelPage from "./containers/DigitalLabel";
+import { LABEL_PATH } from "./utils/constants/path";
 
 const AppLayOut = styled.div`
   display: flex;
@@ -30,7 +33,15 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/main/:contents" element={<MainPage />} />
             <Route path="/board/:contents" element={<BoardPage />} />
-            <Route path="/basicLabel/:contents" element={<BasicLabelPage />} />
+            <Route
+              path="/board/subMenu/:contents"
+              element={<CreateSubMenu />}
+            />
+            <Route path={LABEL_PATH} element={<BasicLabelPage />} />
+            <Route
+              path="/digitalLabel/:contents"
+              element={<DigitalLabelPage />}
+            />
             <Route
               path="/basicLabel/detail/:id"
               element={<BasicLabelDetailPage />}

@@ -31,6 +31,7 @@ const MenuBox = styled.div<{ $isSelected: boolean }>`
   font-style: normal;
   font-weight: 700;
   line-height: 21.333px; /* 118.519% */
+  cursor: pointer;
 `;
 
 interface MainHeaderIProps {
@@ -95,7 +96,20 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
 
               switch (item.id) {
                 case 3: {
-                  navigate(`/basicLabel/all?content=list`);
+                  navigate(
+                    `/label/basic?group_id=${item.id}&sub_id=${
+                      headerItem[2].sub_menus![0].id
+                    }`
+                  );
+
+                  return;
+                }
+                case 4: {
+                  navigate(
+                    `/label/digital?group_id=${item.id}&sub_id=${
+                      headerItem[3].sub_menus![0].id
+                    }`
+                  );
 
                   return;
                 }

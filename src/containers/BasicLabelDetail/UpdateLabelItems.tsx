@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Column from "../../components/Column";
 import Row from "../../components/Row";
 import SaveButton from "../Main/components/Common/SaveButton";
+import { RecordsEntity } from "../BasicLabel/hooks/types";
 
 const Container = styled.div`
   display: flex;
@@ -122,7 +123,15 @@ const Textarea = styled.textarea`
   }
 `;
 
-const UpdateLabelItems = () => {
+interface UpdateLabelItemsIProps {
+  basicLabelDetailItem: RecordsEntity;
+}
+
+const UpdateLabelItems: React.FC<UpdateLabelItemsIProps> = (props) => {
+  const { basicLabelDetailItem } = props;
+
+  console.log(basicLabelDetailItem);
+
   return (
     <Container>
       <ItemContainer>
@@ -369,13 +378,19 @@ const UpdateLabelItems = () => {
       </ItemContainer>
       <Row
         justifyContent="flex-end"
+        gap="14px"
         style={{ width: "100%", paddingTop: "50px" }}
       >
+        <SaveButton
+          onClick={() => {}}
+          text="삭제"
+          style={{ background: "#868686" }}
+        />
         <SaveButton
           onClick={() => {
             // handleCreateBasicLabel();
           }}
-          text="저장"
+          text="수정"
         />
       </Row>
     </Container>

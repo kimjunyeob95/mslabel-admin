@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { parse } from "query-string-for-all";
 import styled from "styled-components";
 import Row from "../../../components/Row";
 import Column from "../../../components/Column";
 import { BasicLabelParams } from "../hooks/useBasicLabelHooks";
 import SaveButton from "../../Main/components/Common/SaveButton";
+import { useSubMenuListHooks } from "../../Board/hooks/useSubMenuListHooks";
 
 const Container = styled.div`
   display: flex;
@@ -99,6 +102,7 @@ const Radio = styled.input`
   height: 16px;
   stroke-width: 1px;
   stroke: var(--Line-Gray_2, #acacac);
+  cursor: pointer;
 `;
 
 const Textarea = styled.textarea`
@@ -123,8 +127,13 @@ const Textarea = styled.textarea`
   }
 `;
 
+const ThumbnailImage = styled.img`
+  width: 106px;
+  height: 106px;
+`;
 interface CreateLabelItemsIProps {
   basicLabelParams: BasicLabelParams;
+  type: "create" | "update";
   handleChangeBasicLabelParams: (key: string, value: any) => void;
   handleCreateBasicLabel: () => void;
 }
@@ -132,9 +141,16 @@ interface CreateLabelItemsIProps {
 const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
   const {
     basicLabelParams,
+    type,
     handleChangeBasicLabelParams,
     handleCreateBasicLabel,
   } = props;
+
+  const location = useLocation();
+
+  const { group_id } = parse(location.search);
+
+  const { basicLabelSubMenuList, getSubBasicLabelList } = useSubMenuListHooks();
 
   const hanldeImageUpload = (key: string, event: any) => {
     const file = event.target.files[0];
@@ -142,42 +158,84 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
     handleChangeBasicLabelParams(key, file);
   };
 
-  console.log(basicLabelParams, "<<");
+  useEffect(() => {
+    getSubBasicLabelList(group_id ? Number(group_id) : 0);
+  }, [group_id]);
+
+  console.log(basicLabelParams, "<");
+
+  const renderSaveButton = (): JSX.Element => {
+    if (type === "create") {
+      return (
+        <Row
+          justifyContent="flex-end"
+          style={{ width: "100%", paddingTop: "50px" }}
+        >
+          <SaveButton
+            onClick={() => {
+              handleCreateBasicLabel();
+            }}
+            text="저장"
+          />
+        </Row>
+      );
+    }
+
+    return (
+      <Row
+        justifyContent="flex-end"
+        gap="14px"
+        style={{ width: "100%", paddingTop: "50px" }}
+      >
+        <SaveButton
+          onClick={() => {}}
+          text="삭제"
+          style={{ background: "#868686" }}
+        />
+        <SaveButton
+          onClick={() => {
+            handleCreateBasicLabel();
+          }}
+          text="수정"
+        />
+      </Row>
+    );
+  };
 
   return (
     <Container>
       <ItemContainer>
-        <TitleForm>서브 메뉴</TitleForm>
+        <TitleForm>
+          서브 메뉴 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <Row gap="24px">
-            <Row gap="8px">
-              <Radio
-                type="radio"
-                checked={basicLabelParams.sub_id === 9}
-                onChange={() => {
-                  handleChangeBasicLabelParams("sub_id", 9);
-                }}
-              />
-              업종별 라벨
-            </Row>
-            <Row gap="8px">
-              <Radio
-                type="radio"
-                checked={basicLabelParams.sub_id === 10}
-                onChange={() => {
-                  handleChangeBasicLabelParams("sub_id", 10);
-                }}
-              />
-              특수 라벨
-            </Row>
+            {basicLabelSubMenuList &&
+              basicLabelSubMenuList?.result.map((item, idx) => {
+                return (
+                  <Row gap="8px" key={idx}>
+                    <Radio
+                      type="radio"
+                      checked={basicLabelParams.sub_id === item.id}
+                      onChange={() => {
+                        handleChangeBasicLabelParams("sub_id", item.id);
+                      }}
+                    />
+                    {item.sub_title}
+                  </Row>
+                );
+              })}
           </Row>
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>제목</TitleForm>
+        <TitleForm>
+          제목 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <InputForm
             placeholder="제목을 입력해주세요."
+            value={basicLabelParams.title}
             onChange={(e: any) => {
               handleChangeBasicLabelParams("title", e.target.value);
             }}
@@ -185,7 +243,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>노출여부</TitleForm>
+        <TitleForm>
+          노출여부 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <Row gap="24px">
             <Row gap="8px">
@@ -212,10 +272,13 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>내용</TitleForm>
+        <TitleForm>
+          내용 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <Textarea
             placeholder="내용을 입력하세요."
+            value={basicLabelParams.desc}
             onChange={(e: any) => {
               handleChangeBasicLabelParams("desc", e.target.value);
             }}
@@ -223,7 +286,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>대표 이미지</TitleForm>
+        <TitleForm>
+          대표 이미지 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
@@ -238,11 +303,19 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
+            {type === "update" && (
+              <ThumbnailImage
+                src={basicLabelParams.main_img}
+                alt="main thumbnail"
+              />
+            )}
           </Column>
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>하단 이미지1</TitleForm>
+        <TitleForm>
+          하단 이미지1 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <Column gap="13px" align="flex-start">
             <Row gap="24px">
@@ -261,6 +334,12 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
               />
               (사이즈 : 606x606(px), 용량 5MB이하, 형식: jpg, png)
             </Row>
+            {type === "update" && (
+              <ThumbnailImage
+                src={basicLabelParams.bottom_img1}
+                alt="bottom thumbnail"
+              />
+            )}
           </Column>
         </ContentsForm>
       </ItemContainer>
@@ -341,7 +420,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>원단</TitleForm>
+        <TitleForm>
+          원단 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <InputForm
             placeholder="원단을 입력하세요."
@@ -353,7 +434,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>사이즈</TitleForm>
+        <TitleForm>
+          사이즈 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <InputForm
             placeholder="사이즈를 입력하세요."
@@ -365,7 +448,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>형태</TitleForm>
+        <TitleForm>
+          형태 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <InputForm
             placeholder="형태를 입력하세요."
@@ -377,7 +462,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         </ContentsForm>
       </ItemContainer>
       <ItemContainer>
-        <TitleForm>키워드</TitleForm>
+        <TitleForm>
+          키워드 <span style={{ color: "#F00" }}>*</span>
+        </TitleForm>
         <ContentsForm>
           <InputForm
             placeholder="#000, #000와 같이 키워드를 입력하세요."
@@ -388,17 +475,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
           />
         </ContentsForm>
       </ItemContainer>
-      <Row
-        justifyContent="flex-end"
-        style={{ width: "100%", paddingTop: "50px" }}
-      >
-        <SaveButton
-          onClick={() => {
-            handleCreateBasicLabel();
-          }}
-          text="저장"
-        />
-      </Row>
+      {renderSaveButton()}
     </Container>
   );
 };

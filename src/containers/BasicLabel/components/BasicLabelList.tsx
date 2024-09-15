@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import dayjs from "dayjs";
 
@@ -8,6 +8,7 @@ import Text from "../../../components/Text";
 import { useSubMenuListHooks } from "../../Board/hooks/useSubMenuListHooks";
 import { BasicLabelListType } from "../hooks/types";
 import CommonTable from "../../../components/Table";
+import { parse } from "query-string-for-all";
 
 const Container = styled.div`
   display: flex;
@@ -88,19 +89,63 @@ const SearchBox = styled.input`
 
 interface BasicLabelListIProps {
   basicLabelList: BasicLabelListType;
+  handleChangeBasicLabelParams: (key: string, value: any) => void;
 }
 
 const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
-  const { basicLabelList } = props;
+  const { basicLabelList, handleChangeBasicLabelParams } = props;
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { group_id, sub_id } = parse(location.search);
 
   const { basicLabelSubMenuList, getSubBasicLabelList } = useSubMenuListHooks();
 
-  useEffect(() => {
-    getSubBasicLabelList();
-  }, []);
+  const [paginationIndex, setPaginationIndex] = useState<number>(1);
+  const pageNationLength = basicLabelList
+    ? Math.ceil(basicLabelList!.total_records / 10)
+    : 0;
 
-  console.log(basicLabelSubMenuList, "<<");
+  const handlePaginationNavigate = (type: string) => {
+    switch (type) {
+      case "next": {
+        if (paginationIndex !== pageNationLength) {
+          setPaginationIndex(paginationIndex + 1);
+          handleChangeBasicLabelParams("page", paginationIndex + 1);
+        }
+
+        return;
+      }
+      case "next-all": {
+        if (paginationIndex !== pageNationLength) {
+          setPaginationIndex(pageNationLength);
+          handleChangeBasicLabelParams("page", pageNationLength);
+        }
+        return;
+      }
+      case "prev": {
+        if (paginationIndex !== 1) {
+          setPaginationIndex(paginationIndex - 1);
+          handleChangeBasicLabelParams("page", paginationIndex - 1);
+        }
+
+        return;
+      }
+      case "prev-all": {
+        if (paginationIndex !== 1) {
+          setPaginationIndex(1);
+          handleChangeBasicLabelParams("page", 1);
+        }
+        return;
+      }
+      default:
+        return;
+    }
+  };
+
+  useEffect(() => {
+    getSubBasicLabelList(group_id ? Number(group_id) : 0);
+  }, [group_id]);
 
   return (
     <Container>
@@ -120,7 +165,7 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
           </Row>
           {basicLabelSubMenuList?.result.map((item, idx) => {
             return (
-              <Row gap="8px" align="center">
+              <Row gap="8px" align="center" key={idx}>
                 <Radio type="radio" />
                 <Text
                   color="#000"
@@ -207,7 +252,7 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
             color: "#fff",
           }}
           onClick={() => {
-            navigate("/basicLabel/create");
+            navigate(`/label/create${location.search}`);
           }}
         >
           신규 등록
@@ -229,12 +274,11 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
         tdElement={
           <React.Fragment>
             {basicLabelList.records.map((item, idx) => {
-              console.log(item, "item");
               return (
                 <tr
                   className="item"
                   key={idx}
-                  // onClick={() => (item)}
+                  onClick={() => navigate(`/basicLabel/detail/${item.id}`)}
                 >
                   <td style={{ maxWidth: "65px" }}>{item.id}</td>
                   <td style={{ maxWidth: "65px" }}>{item.sub_id}</td>

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Row from "../../components/Row";
 import { useBasicLabelDetailHooks } from "./hooks/useBasicLabelDetailHooks";
+import UpdateLabelItems from "./UpdateLabelItems";
+import CreateLabelItems from "../BasicLabel/components/CreateLabelItems";
 
 const Container = styled.div`
   display: flex;
@@ -25,13 +27,26 @@ const Title = styled.div`
 `;
 
 const BasicLabelDetailPage = () => {
-  const {} = useBasicLabelDetailHooks();
+  const {
+    basicLabelDetailItem,
+    basicLabelParams,
+    handleChangeBasicLabelParams,
+    handleUpdateBasicLabel,
+  } = useBasicLabelDetailHooks();
 
   return (
     <Container>
       <Row style={{ width: "100%", justifyContent: "flex-start" }}>
         <Title>일반라벨</Title>
       </Row>
+      {basicLabelDetailItem && (
+        <CreateLabelItems
+          basicLabelParams={basicLabelParams}
+          type="update"
+          handleChangeBasicLabelParams={handleChangeBasicLabelParams}
+          handleCreateBasicLabel={handleUpdateBasicLabel}
+        />
+      )}
     </Container>
   );
 };
