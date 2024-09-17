@@ -54,9 +54,23 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
       return;
     }
 
-    if (location.pathname.includes("basicLabel")) {
+    if (location.pathname.includes("basic")) {
       handelOnClickHeaderItem("일반라벨");
       setSelectedItem("일반라벨");
+
+      return;
+    }
+
+    if (location.pathname.includes("digital")) {
+      handelOnClickHeaderItem("디지털인쇄");
+      setSelectedItem("디지털인쇄");
+
+      return;
+    }
+
+    if (location.pathname.includes("estimate")) {
+      handelOnClickHeaderItem("견적문의");
+      setSelectedItem("견적문의");
 
       return;
     }
@@ -108,6 +122,15 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
                   navigate(
                     `/label/digital?group_id=${item.id}&sub_id=${
                       headerItem[3].sub_menus![0].id
+                    }`
+                  );
+
+                  return;
+                }
+                case 5: {
+                  navigate(
+                    `/estimate?group_id=${item.id}&sub_id=${
+                      headerItem[4].sub_menus![0].id
                     }`
                   );
 

@@ -159,7 +159,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
   };
 
   useEffect(() => {
-    getSubBasicLabelList(group_id ? Number(group_id) : 0);
+    if (group_id) {
+      getSubBasicLabelList(group_id ? Number(group_id) : 0);
+    }
   }, [group_id]);
 
   console.log(basicLabelParams, "<");

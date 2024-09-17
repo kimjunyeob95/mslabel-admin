@@ -7,3 +7,4 @@ export const ADMIN_SUB_MENU = "/admin/menu/sub";
 
 export const ADMIN_BOARD_PRODUCT = "/admin/board/product";
 export const ADMIN_BOARD_DETAIL = "/admin/board";
+export const ADMIN_BOARD_BOARD = "/admin/board/board";

@@ -9,7 +9,13 @@ import BasicLabelPage from "./containers/BasicLabel";
 import BasicLabelDetailPage from "./containers/BasicLabelDetail";
 import CreateSubMenu from "./containers/Board/SubMenuList/CreateSubMenu";
 import DigitalLabelPage from "./containers/DigitalLabel";
-import { LABEL_PATH } from "./utils/constants/path";
+import {
+  ESTIMATE_DETAIL_PATH,
+  ESTIMATE_PATH,
+  LABEL_PATH,
+} from "./utils/constants/path";
+import EstimateInquiryPage from "./containers/EstimateInquiry/indext";
+import EstimateDetailPage from "./containers/EstimateDetail";
 
 const AppLayOut = styled.div`
   display: flex;
@@ -45,6 +51,11 @@ function App() {
             <Route
               path="/basicLabel/detail/:id"
               element={<BasicLabelDetailPage />}
+            />
+            <Route path={ESTIMATE_PATH} element={<EstimateInquiryPage />} />
+            <Route
+              path={ESTIMATE_DETAIL_PATH}
+              element={<EstimateDetailPage />}
             />
           </Route>
         </Routes>

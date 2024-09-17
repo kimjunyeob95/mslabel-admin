@@ -188,7 +188,17 @@ const SubHeader: React.FC<SubHeaderIProps> = (props) => {
           <>
             {headerItem[4].sub_menus?.map((item, idx) => {
               return (
-                <SubItem $isActiveButton={false} key={idx}>
+                <SubItem
+                  $isActiveButton={location.search.includes(
+                    `sub_id=${item.id}`
+                  )}
+                  key={idx}
+                  onClick={() => {
+                    navigate(
+                      `/estimate?group_id=${headerItem[4].id}&sub_id=${item.id}`
+                    );
+                  }}
+                >
                   {item.title}
                 </SubItem>
               );

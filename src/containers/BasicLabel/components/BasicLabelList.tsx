@@ -278,7 +278,11 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
                 <tr
                   className="item"
                   key={idx}
-                  onClick={() => navigate(`/basicLabel/detail/${item.id}`)}
+                  onClick={() =>
+                    navigate(
+                      `/basicLabel/detail/${item.id}?group_id=${group_id}&sub_id=${sub_id}`
+                    )
+                  }
                 >
                   <td style={{ maxWidth: "65px" }}>{item.id}</td>
                   <td style={{ maxWidth: "65px" }}>{item.sub_id}</td>
