@@ -22,7 +22,7 @@ export interface EstimateDetailType {
   deleted_at?: null;
   categories?: CategoriesEntity[];
   admin_user: AdminUser;
-  replies?: null[];
+  replies?: Replies[];
 }
 
 export interface CategoriesEntity {
@@ -43,4 +43,16 @@ export interface AdminUser {
   user_id: string;
   email: string;
   user_name: string;
+}
+
+export interface Replies {
+  admin_user: { user_id: string; email: string; user_name: string };
+  board_id: number;
+  created_at: string;
+  deleted_at: null;
+  desc: string;
+  id: number;
+  reply_type: number;
+  updated_at: string;
+  user_id: string;
 }

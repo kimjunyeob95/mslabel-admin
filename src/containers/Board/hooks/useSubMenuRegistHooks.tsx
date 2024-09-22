@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { instance } from "../../../api/api";
 import { ADMIN_SUB_MENU } from "../../../utils/constants/apiKey";
+import { useNavigate } from "react-router-dom";
 
 export enum BoardType {
   IMAGE = "image",
@@ -16,6 +17,7 @@ export interface RegistParams {
 }
 
 export const useSubMenuRegistHooks = () => {
+  const navigate = useNavigate();
   const [registParams, setRegistParams] = useState<RegistParams>({
     group_id: 1,
     title: "",
@@ -34,7 +36,8 @@ export const useSubMenuRegistHooks = () => {
       );
 
       if (response) {
-        console.log(response);
+        navigate("/board/subMenu?content=view");
+        window.location.reload();
       }
     } catch (error: any) {
       alert(error.response.data.error.message);

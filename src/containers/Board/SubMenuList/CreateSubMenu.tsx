@@ -121,8 +121,6 @@ const CreateSubMenu = () => {
     useSubMenuRegistHooks();
   const params = useParams<{ contents: string }>();
 
-  console.log(registParams, params.contents, "<<<<");
-
   const renderMenuForm = (): JSX.Element => {
     return (
       <ItemContainer>

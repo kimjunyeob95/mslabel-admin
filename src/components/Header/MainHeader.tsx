@@ -84,7 +84,7 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
         onClick={() => {
           handelOnClickHeaderItem("게시판관리");
           setSelectedItem("게시판관리");
-          navigate("/board/recent");
+          navigate("/board/menu?content=view");
         }}
       >
         게시판관리
