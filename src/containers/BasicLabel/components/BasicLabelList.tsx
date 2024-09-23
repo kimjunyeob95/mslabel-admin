@@ -294,7 +294,15 @@ const BasicLabelList: React.FC<BasicLabelListIProps> = (props) => {
                     />
                   </td>
                   <td style={{ minWidth: "150px" }}>{item.title}</td>
-                  <td style={{ minWidth: "485px" }}>{item.desc}</td>
+                  <td
+                    style={{
+                      maxWidth: "485px",
+                      textWrap: "wrap",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.desc}
+                  </td>
                   <td style={{ maxWidth: "105px" }}>{item.user_id}</td>
                   <td style={{ maxWidth: "115px" }}>{item.is_show}</td>
                   <td style={{ maxWidth: "125px" }}>
