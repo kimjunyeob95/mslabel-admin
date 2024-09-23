@@ -48,6 +48,7 @@ const BasicLabelPage = () => {
             type="create"
             handleChangeBasicLabelParams={handleChangeBasicLabelParams}
             handleCreateBasicLabel={handleCreateBasicLabel}
+            handleDeleteBasicLabel={() => {}}
           />
         );
       }

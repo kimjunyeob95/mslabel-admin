@@ -46,6 +46,7 @@ const DigitalLabelPage = () => {
             type="create"
             handleChangeBasicLabelParams={handleChangeBasicLabelParams}
             handleCreateBasicLabel={handleCreateBasicLabel}
+            handleDeleteBasicLabel={() => {}}
           />
         );
       }

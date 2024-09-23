@@ -32,6 +32,7 @@ const BasicLabelDetailPage = () => {
     basicLabelParams,
     handleChangeBasicLabelParams,
     handleUpdateBasicLabel,
+    handleDeleteBasicLabel,
   } = useBasicLabelDetailHooks();
 
   return (
@@ -45,6 +46,7 @@ const BasicLabelDetailPage = () => {
           type="update"
           handleChangeBasicLabelParams={handleChangeBasicLabelParams}
           handleCreateBasicLabel={handleUpdateBasicLabel}
+          handleDeleteBasicLabel={handleDeleteBasicLabel}
         />
       )}
     </Container>

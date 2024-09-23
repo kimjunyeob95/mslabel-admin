@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Row from "../../../components/Row";
 import { useMainMenuListHooks } from "../hooks/useMainMenuListHooks";
@@ -9,7 +10,6 @@ import {
 } from "../hooks/useSubMenuRegistHooks";
 import Column from "../../../components/Column";
 import SaveButton from "../../Main/components/Common/SaveButton";
-import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;

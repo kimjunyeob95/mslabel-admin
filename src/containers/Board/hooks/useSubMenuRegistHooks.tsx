@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { instance } from "../../../api/api";
 import { ADMIN_SUB_MENU } from "../../../utils/constants/apiKey";
-import { useNavigate } from "react-router-dom";
 
 export enum BoardType {
   IMAGE = "image",

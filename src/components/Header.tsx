@@ -69,7 +69,7 @@ const Header = () => {
       {headerItem && (
         <React.Fragment>
           <MainContainer>
-            <div>login</div>
+            <div></div>
             <MainHeader
               headerItem={headerItem}
               handelOnClickHeaderItem={handelOnClickHeaderItem}

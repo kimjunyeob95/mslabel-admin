@@ -130,8 +130,6 @@ interface UpdateLabelItemsIProps {
 const UpdateLabelItems: React.FC<UpdateLabelItemsIProps> = (props) => {
   const { basicLabelDetailItem } = props;
 
-  console.log(basicLabelDetailItem);
-
   return (
     <Container>
       <ItemContainer>

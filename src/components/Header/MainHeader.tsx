@@ -143,7 +143,7 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
           </MenuBox>
         );
       })}
-      <MenuBox
+      {/* <MenuBox
         $isSelected={selecteItem === "회원관리"}
         onClick={() => {
           handelOnClickHeaderItem("회원관리");
@@ -169,7 +169,7 @@ const MainHeader: React.FC<MainHeaderIProps> = (props) => {
         }}
       >
         기타
-      </MenuBox>
+      </MenuBox> */}
     </Container>
   );
 };

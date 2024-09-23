@@ -136,6 +136,7 @@ interface CreateLabelItemsIProps {
   type: "create" | "update";
   handleChangeBasicLabelParams: (key: string, value: any) => void;
   handleCreateBasicLabel: () => void;
+  handleDeleteBasicLabel: () => void;
 }
 
 const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
@@ -144,6 +145,7 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
     type,
     handleChangeBasicLabelParams,
     handleCreateBasicLabel,
+    handleDeleteBasicLabel,
   } = props;
 
   const location = useLocation();
@@ -163,8 +165,6 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
       getSubBasicLabelList(group_id ? Number(group_id) : 0);
     }
   }, [group_id]);
-
-  console.log(basicLabelParams, "<");
 
   const renderSaveButton = (): JSX.Element => {
     if (type === "create") {
@@ -190,7 +190,9 @@ const CreateLabelItems: React.FC<CreateLabelItemsIProps> = (props) => {
         style={{ width: "100%", paddingTop: "50px" }}
       >
         <SaveButton
-          onClick={() => {}}
+          onClick={() => {
+            handleDeleteBasicLabel();
+          }}
           text="삭제"
           style={{ background: "#868686" }}
         />

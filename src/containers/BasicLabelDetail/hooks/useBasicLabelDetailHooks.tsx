@@ -77,7 +77,22 @@ export const useBasicLabelDetailHooks = () => {
       );
 
       if (response) {
-        navigate(`/basicLabel/${response.data.data.sub_id}`);
+        navigate(`/label/basic?group_id=3&sub_id=${response.data.data.sub_id}`);
+        window.location.reload();
+      }
+    } catch (error: any) {
+      alert(error.response.data.error.message);
+    }
+  };
+
+  const handleDeleteBasicLabel = async () => {
+    try {
+      const response = await instance.delete(
+        `${ADMIN_BOARD_PRODUCT}/delete/${params.id}`
+      );
+
+      if (response) {
+        navigate(`/label/basic?group_id=3&sub_id=${response.data.data.sub_id}`);
         window.location.reload();
       }
     } catch (error: any) {
@@ -93,6 +108,7 @@ export const useBasicLabelDetailHooks = () => {
     basicLabelDetailItem,
     basicLabelParams,
     handleChangeBasicLabelParams,
+    handleDeleteBasicLabel,
     handleUpdateBasicLabel,
   };
 };
